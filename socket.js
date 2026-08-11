@@ -1,10 +1,17 @@
 const { Server } = require("socket.io");
 const jwt = require("jsonwebtoken");
+const mongoose = require("mongoose");
+const Conversation = require("./models/conversationSchema");
+const Message = require("./models/messageSchema");
+const { Jwt_secret } = require("./keys");
 
 module.exports = server => {
   const io = new Server(server, {
     cors: {
-      origin: process.env.CLIENT_URL || "http://localhost:5173",
+      origin: [
+        process.env.CLIENT_URL || "http://localhost:5000",
+        "http://localhost:5173",
+      ],
       credentials: true
     }
   });
@@ -14,7 +21,7 @@ module.exports = server => {
       const token = socket.handshake.auth?.token;
       if (!token) return next(new Error("Authentication token is required"));
 
-      socket.user = jwt.verify(token, process.env.JWT_SECRET);
+      socket.user = jwt.verify(token, Jwt_secret);
       next();
     } catch (e) {
       next(new Error("Invalid authentication token"));
@@ -22,22 +29,37 @@ module.exports = server => {
   });
 
   io.on("connection", socket => {
-    const userId = socket.user.id;
+    const userId = socket.user._id.toString();
     socket.join(`user:${userId}`);
 
-    socket.on("join_conversation", async ({ conversationId }) => {
-      const conversation = await Conversation.findOne({
-        _id: conversationId,
-        participants: userId
-      });
-
-      if (!conversation) {
-        return socket.emit("conversation_error", {
-          error: "You are not a member of this conversation"
-        });
+    const getConversationForUser = async conversationId => {
+      if (!mongoose.isValidObjectId(conversationId)) {
+        return null;
       }
 
-      socket.join(`conversation:${conversationId}`);
+      return Conversation.findOne({
+        _id: conversationId,
+        participants: userId,
+      }).select("_id participants");
+    };
+
+    socket.on("join_conversation", async ({ conversationId }) => {
+      try {
+        const conversation = await getConversationForUser(conversationId);
+
+        if (!conversation) {
+          return socket.emit("conversation_error", {
+            error: "You are not a member of this conversation",
+          });
+        }
+
+        socket.join(`conversation:${conversationId}`);
+        socket.emit("conversation_joined", { conversationId });
+      } catch (error) {
+        socket.emit("conversation_error", {
+          error: "Unable to join the conversation",
+        });
+      }
     });
 
 
@@ -59,19 +81,35 @@ module.exports = server => {
           });
         }
 
-        // 1. Verify user belongs to conversation
+        const conversation = await getConversationForUser(conversationId);
 
-        // 2. Save message to database
+        if (!conversation) {
+          return socket.emit("message_error", {
+            error: "You are not a member of this conversation",
+          });
+        }
+
         const message = await Message.create({
-          conversationId,
+          conversation: conversationId,
           sender: userId,
           text: text.trim()
         });
 
-        // 3. Broadcast saved message
-        io.to(`conversation:${conversationId}`).emit(
+        await Conversation.findByIdAndUpdate(conversationId, {
+          $set: { updatedAt: new Date() },
+        });
+
+        // Ensure the sender receives their own persisted message as well.
+        socket.join(`conversation:${conversationId}`);
+        await message.populate("sender", "_id name userName Photo");
+
+        const participantRooms = conversation.participants.map(
+          participant => `user:${participant.toString()}`
+        );
+
+        io.to([`conversation:${conversationId}`, ...participantRooms]).emit(
           "new_message",
-          message
+          message.toObject()
         );
 
       } catch (error) {
@@ -84,13 +122,13 @@ module.exports = server => {
     });
 
 
-    socket.on("typing", ({ conversationId }) => {
-      if (conversationId)
+    socket.on("typing", async ({ conversationId }) => {
+      if (await getConversationForUser(conversationId))
         socket.to(`conversation:${conversationId}`).emit("user_typing", { userId });
     });
 
-    socket.on("stop_typing", ({ conversationId }) => {
-      if (conversationId)
+    socket.on("stop_typing", async ({ conversationId }) => {
+      if (await getConversationForUser(conversationId))
         socket.to(`conversation:${conversationId}`).emit("user_stopped_typing", { userId });
     });
 

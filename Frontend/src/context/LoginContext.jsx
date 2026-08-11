@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import React, {
   createContext,
   useContext,
@@ -8,7 +9,7 @@ import React, {
 import {
   connectSocket,
   disconnectSocket,
-} from "../socket";
+} from "../socket/socket";
 
 export const LoginContext = createContext(null);
 
@@ -121,6 +122,8 @@ export const LoginProvider = ({ children }) => {
   const value = {
     userLogin,
     setUserLogin,
+    // Keep the original casing available for existing consumers.
+    setuserLogin: setUserLogin,
 
     modalOpen,
     setmodalOpen: setModalOpen,

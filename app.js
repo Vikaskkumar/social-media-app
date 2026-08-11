@@ -12,11 +12,12 @@ const app = express();
 const server = http.createServer(app);
 const PORT = process.env.PORT || 5000;
 const client = process.env.CLIENT_URL || "http://localhost:5173";
+const allowedOrigins = Array.from(new Set([client, "http://localhost:5000", "http://localhost:5173"]));
 const publicDir = path.join(__dirname, "public");
 
 
 //middlewares
-app.use(cors({ origin: client, credentials: true }));
+app.use(cors({ origin: allowedOrigins, credentials: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -25,6 +26,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(require("./Routes/auth"));
 app.use(require("./Routes/createPost"));
 app.use(require("./Routes/user"));
+app.use(require("./Routes/chat"));
 
 
 

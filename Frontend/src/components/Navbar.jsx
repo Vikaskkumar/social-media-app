@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import logo from "../assets/mainlogo.png";
 import { Link } from "react-router-dom";
 import { LoginContext } from "../context/LoginContext";
-import { Menu, X } from "lucide-react";
+import { Menu, MessageCircle, X } from "lucide-react";
 
 function Navbar({ login }) {
   const { setmodalOpen } = useContext(LoginContext);
@@ -30,13 +30,27 @@ function Navbar({ login }) {
             </p>
           </Link>
 
-          {/* MENU ICON */}
-          <button
-            onClick={() => setOpen(true)}
-            className="text-cyan-400 hover:text-white transition"
-          >
-            <Menu size={26} />
-          </button>
+          <div className="flex items-center gap-3">
+            {isLoggedIn && (
+              <Link
+                to="/Chat"
+                title="Open chat"
+                aria-label="Open chat"
+                className="grid h-10 w-10 place-items-center rounded-md border border-cyan-400/20 text-cyan-300 transition hover:border-cyan-300 hover:bg-cyan-400/10 hover:text-white"
+              >
+                <MessageCircle size={21} />
+              </Link>
+            )}
+
+            {/* MENU ICON */}
+            <button
+              onClick={() => setOpen(true)}
+              className="grid h-10 w-10 place-items-center rounded-md text-cyan-400 transition hover:bg-cyan-400/10 hover:text-white"
+              aria-label="Open menu"
+            >
+              <Menu size={26} />
+            </button>
+          </div>
         </div>
       </nav>
 
@@ -75,6 +89,10 @@ function Navbar({ login }) {
 
               <Link to="/CreatePost" onClick={() => setOpen(false)} className="hover:text-cyan-400">
                 Create Post
+              </Link>
+
+              <Link to="/Chat" onClick={() => setOpen(false)} className="hover:text-cyan-400">
+                Chat
               </Link>
 
               <Link to="/followingpost" onClick={() => setOpen(false)} className="hover:text-cyan-400">
