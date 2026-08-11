@@ -1,76 +1,48 @@
 const express = require("express");
 const path = require("path");
-
-try {
-  process.loadEnvFile(path.join(__dirname, ".env"));
-} catch (error) {
-  if (error.code !== "ENOENT") throw error;
-}
-
+const http = require("http");
 const cors = require("cors");
-const Dbconnection = require("./config/db.js");
+
+process.loadEnvFile(path.join(__dirname, ".env"));
+
+const db = require("./config/db");
+const setupSocket = require("./socket");
 
 const app = express();
+const server = http.createServer(app);
 const PORT = process.env.PORT || 5000;
-const staticDirectory = path.join(__dirname, "public");
+const client = process.env.CLIENT_URL || "http://localhost:5173";
+const publicDir = path.join(__dirname, "public");
 
-function missingConfiguration() {
-  return ["MONGODB_URI", "JWT_SECRET"].filter((name) => !process.env[name]);
-}
 
-app.use(async (req, res, next) => {
-  const missing = missingConfiguration();
-  if (missing.length) {
-    return res.status(500).json({ error: `Missing server configuration: ${missing.join(", ")}` });
-  }
-
-  try {
-    await Dbconnection();
-    next();
-  } catch (error) {
-    console.error("Database connection error:", error.message);
-    return res.status(503).json({ error: "Database is temporarily unavailable" });
-  }
-});
-
-app.use(cors());
+//middlewares
+app.use(cors({ origin: client, credentials: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+
+//routes configuration
 app.use(require("./Routes/auth"));
 app.use(require("./Routes/createPost"));
 app.use(require("./Routes/user"));
 
-app.get("/health", (req, res) => {
-  res.status(200).json({ status: "ok" });
+
+
+app.use(express.static(publicDir));
+app.use((req, res, next) =>
+  req.method === "GET"
+    ? res.sendFile(path.join(publicDir, "index.html"), e => e && next(e))
+    : next()
+);
+
+
+//socket configuration
+setupSocket(server);
+
+
+db().then(() => {
+  server.listen(PORT, () => console.log(`Server running on ${PORT}`));
+}).catch(e => {
+  console.error("Unable to start:", e.message);
+  process.exit(1);
 });
-
-app.use(express.static(staticDirectory));
-
-app.use((req, res, next) => {
-  if (req.method !== "GET") return next();
-  res.sendFile(path.join(staticDirectory, "index.html"), (error) => {
-    if (error) next(error);
-  });
-});
-
-if (require.main === module) {
-  const missing = missingConfiguration();
-  if (missing.length) {
-    console.error(`Unable to start server: Missing ${missing.join(", ")}. Add them to .env (see .env.example) or your deployment environment.`);
-    process.exit(1);
-  }
-
-  Dbconnection()
-    .then(() => {
-      app.listen(PORT, () => {
-        console.log(`Server is running on port ${PORT}`);
-      });
-    })
-    .catch((error) => {
-      console.error("Unable to start server:", error.message);
-      process.exit(1);
-    });
-}
-
-module.exports = app;
