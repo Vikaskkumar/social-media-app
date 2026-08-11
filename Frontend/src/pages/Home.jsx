@@ -1,9 +1,15 @@
+import React from "react";
 import Feed from "./Feed";
+import Sidebar from "./Sidebar";
 
-/**
- * Home is intentionally thin — it just mounts the Feed page.
- * All data-fetching, post cards, and sidebar logic live in Feed.jsx.
- */
 export default function Home() {
-  return <Feed />;
+  return (
+    <div className="flex min-h-screen bg-black text-white">
+      <Sidebar />
+
+      <main className="flex-1 ml-16 min-h-screen">
+        <Feed />
+      </main>
+    </div>
+  );
 }

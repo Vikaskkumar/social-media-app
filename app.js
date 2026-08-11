@@ -3,7 +3,7 @@ const path = require("path");
 const http = require("http");
 const cors = require("cors");
 
-process.loadEnvFile(path.join(__dirname, ".env"));
+// process.loadEnvFile(path.join(__dirname, ".env"));
 
 const db = require("./config/db");
 const setupSocket = require("./socket");
