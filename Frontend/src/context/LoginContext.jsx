@@ -20,14 +20,12 @@ export const LoginProvider = ({ children }) => {
   const [user, setUser] = useState(() => {
     try {
       const savedUser = localStorage.getItem("user");
-
       return savedUser ? JSON.parse(savedUser) : null;
     } catch (error) {
       console.error(
         "Error loading user from localStorage:",
         error
       );
-
       return null;
     }
   });
@@ -72,9 +70,6 @@ export const LoginProvider = ({ children }) => {
   // -----------------------------
   const login = (userData, jwtToken) => {
     console.log("login() called");
-    console.log("userData:", userData);
-    console.log("jwtToken:", jwtToken);
-
     if (!jwtToken) {
       console.error("Login failed: JWT token is missing");
       return false;
@@ -89,7 +84,6 @@ export const LoginProvider = ({ children }) => {
         "user",
         JSON.stringify(userData)
       );
-
       setUser(userData);
     }
 
@@ -117,6 +111,26 @@ export const LoginProvider = ({ children }) => {
   };
 
   // -----------------------------
+  // Theme Management
+  // -----------------------------
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem("theme") || "dark";
+  });
+
+  useEffect(() => {
+    if (theme === "light") {
+      document.documentElement.classList.remove("dark");
+    } else {
+      document.documentElement.classList.add("dark");
+    }
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === "dark" ? "light" : "dark"));
+  };
+
+  // -----------------------------
   // CONTEXT VALUE
   // -----------------------------
   const value = {
@@ -136,6 +150,9 @@ export const LoginProvider = ({ children }) => {
 
     login,
     logout,
+
+    theme,
+    toggleTheme,
   };
 
   console.log("LoginContext:", value);

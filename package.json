@@ -9,7 +9,7 @@
   "scripts": {
     "start": "node app.js",
     "dev": "nodemon --watch .env --ext js,mjs,cjs,json,env app.js",
-    "build": "npm --prefix Frontend ci && npm --prefix Frontend run build"
+    "build": "npm --prefix Frontend install && npm --prefix Frontend run build"
   },
   "engines": {
     "node": ">=20.19.0"

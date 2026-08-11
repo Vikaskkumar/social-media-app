@@ -133,7 +133,12 @@ module.exports = server => {
     });
 
     socket.on("disconnect", reason => {
-      console.log(`User ${userId} disconnected: ${reason}`);
+      // Normal lifecycle event when user refreshes, closes tab, or navigates away.
+      if (reason === "transport close" || reason === "client namespace disconnect") {
+        console.log(`Socket: User ${userId} session closed (normal page refresh/nav)`);
+      } else {
+        console.log(`Socket: User ${userId} disconnected: ${reason}`);
+      }
     });
   });
 

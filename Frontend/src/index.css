@@ -1,1 +1,74 @@
 @import "tailwindcss" source(".");
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: "Poppins", sans-serif;
+  --color-brand-cyan: #00f3ff;
+  --color-brand-dark: #09090b;
+}
+
+/* Custom scrollbar for modern developer feel */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f4f4f5;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: #09090b;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d4d4d8;
+  border-radius: 4px;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #27272a;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #06b6d4;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #00f3ff55;
+}
+
+/* Subtly animated background cyber glow grid */
+.cyber-glow {
+  background: radial-gradient(circle 800px at 50% -200px, rgba(0, 180, 210, 0.07), transparent 85%);
+}
+
+.dark .cyber-glow,
+.dark.cyber-glow {
+  background: radial-gradient(circle 800px at 50% -200px, rgba(0, 243, 255, 0.12), transparent 85%);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(228, 228, 231, 0.8);
+}
+
+.dark .glass-card {
+  background: rgba(15, 15, 20, 0.75);
+  border: 1px solid rgba(39, 39, 42, 0.8);
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, #09090b 0%, #71717a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.dark .text-gradient {
+  background: linear-gradient(135deg, #fff 0%, #a1a1aa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
