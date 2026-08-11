@@ -49,47 +49,62 @@ router.post('/signup', async (req, res) => {
 
 
 router.post("/signin", async (req, res) => {
-
     const { email, password } = req.body;
 
     if (!email || !password) {
         return res.status(422).json({
-            error: "please add email and password"
+            success: false,
+            message: "Please add email and password",
         });
     }
 
     try {
-        const savedUser = await USER.findOne({ email: email.trim().toLowerCase() });
+        const savedUser = await USER.findOne({
+            email: email.trim().toLowerCase(),
+        });
 
         if (!savedUser) {
-            return res.status(422).json({ error: "invalid email" });
+            return res.status(401).json({
+                success: false,
+                message: "Invalid email or password",
+            });
         }
 
         const match = await bcrypt.compare(password, savedUser.password);
 
         if (!match) {
-            return res.status(422).json({ error: "invalid password" });
+            return res.status(401).json({
+                success: false,
+                message: "Invalid email or password",
+            });
         }
 
-        const token = jwt.sign({ _id: savedUser._id }, Jwt_secret);
+        const token = jwt.sign(
+            { _id: savedUser._id },
+            Jwt_secret,
+            { expiresIn: "7d" }
+        );
 
-        res.status(200).json({
+        return res.status(200).json({
+            success: true,
+            message: "Login successful",
             token,
             user: {
                 _id: savedUser._id,
                 name: savedUser.name,
                 email: savedUser.email,
-                userName: savedUser.userName
-            }
+                userName: savedUser.userName,
+            },
         });
-
     } catch (err) {
-        console.log(err);
-        res.status(500).json({ error: "something went wrong" });
+        console.error("Signin error:", err);
+
+        return res.status(500).json({
+            success: false,
+            message: "Something went wrong",
+        });
     }
-
 });
-
 
 
 

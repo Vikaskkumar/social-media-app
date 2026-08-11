@@ -25,30 +25,64 @@ module.exports = server => {
     const userId = socket.user.id;
     socket.join(`user:${userId}`);
 
-    socket.on("join_conversation", ({ conversationId }) => {
-      if (conversationId) socket.join(`conversation:${conversationId}`);
+    socket.on("join_conversation", async ({ conversationId }) => {
+      const conversation = await Conversation.findOne({
+        _id: conversationId,
+        participants: userId
+      });
+
+      if (!conversation) {
+        return socket.emit("conversation_error", {
+          error: "You are not a member of this conversation"
+        });
+      }
+
+      socket.join(`conversation:${conversationId}`);
     });
+
 
     socket.on("leave_conversation", ({ conversationId }) => {
       if (conversationId) socket.leave(`conversation:${conversationId}`);
     });
 
-    socket.on("send_message", ({ conversationId, text }) => {
-      if (!conversationId)
-        return socket.emit("message_error", { error: "Conversation ID is required" });
+    socket.on("send_message", async ({ conversationId, text }) => {
+      try {
+        if (!conversationId) {
+          return socket.emit("message_error", {
+            error: "Conversation ID is required"
+          });
+        }
 
-      if (!text?.trim())
-        return socket.emit("message_error", { error: "Message cannot be empty" });
+        if (!text?.trim()) {
+          return socket.emit("message_error", {
+            error: "Message cannot be empty"
+          });
+        }
 
-      const message = {
-        conversationId,
-        sender: userId,
-        text: text.trim(),
-        createdAt: new Date()
-      };
+        // 1. Verify user belongs to conversation
 
-      io.to(`conversation:${conversationId}`).emit("new_message", message);
+        // 2. Save message to database
+        const message = await Message.create({
+          conversationId,
+          sender: userId,
+          text: text.trim()
+        });
+
+        // 3. Broadcast saved message
+        io.to(`conversation:${conversationId}`).emit(
+          "new_message",
+          message
+        );
+
+      } catch (error) {
+        console.error(error);
+
+        socket.emit("message_error", {
+          error: "Failed to send message"
+        });
+      }
     });
+
 
     socket.on("typing", ({ conversationId }) => {
       if (conversationId)

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useContext } from 'react'
 import { LoginContext } from './context/LoginContext'
 import Navbar from './components/Navbar'
 import {Routes,Route, Navigate} from 'react-router-dom'
@@ -19,13 +19,11 @@ import Myfollowingpost from './pages/Myfollowingpost'
 
 const App = () => {
 
-  const [userLogin, setuserLogin] = useState(() => Boolean(localStorage.getItem('jwt')));
-  const [modalOpen, setmodalOpen] = useState(false);
+  const { userLogin, modalOpen } = useContext(LoginContext);
 
 
   return (
-     <> 
-       <LoginContext.Provider value={{userLogin, setuserLogin, setmodalOpen}}>
+     <>
 
         <Navbar login={userLogin} />
 
@@ -40,7 +38,6 @@ const App = () => {
         </Routes>
         <ToastContainer theme='dark'/>
         {modalOpen && <Modal />}
-     </LoginContext.Provider>
     </>
    
   )

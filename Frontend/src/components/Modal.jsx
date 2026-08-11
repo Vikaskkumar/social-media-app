@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function Modal() {
 
-  const { setmodalOpen, setuserLogin } = useContext(LoginContext);
+  const { setmodalOpen, logout } = useContext(LoginContext);
   const navigate = useNavigate()
   return (
     <div onClick={()=>{setmodalOpen(false)}} className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
@@ -32,10 +32,7 @@ export default function Modal() {
           </button>
 
           <button onClick={()=>{
-            setmodalOpen(false);
-            localStorage.removeItem("jwt");
-            localStorage.removeItem("user");
-            setuserLogin(false);
+            logout();
             navigate("/Signin");
             }}
              className="px-4 py-2 rounded-md bg-red-600 hover:bg-red-700 text-sm font-medium transition">
