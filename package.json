@@ -1,28 +1,17 @@
 {
-  "name": "backend",
+  "name": "social-media-app",
   "version": "1.0.0",
-  "description": "",
-  "license": "ISC",
-  "author": "",
-  "type": "commonjs",
-  "main": "index.js",
+  "description": "Full-stack Social Media App with modular Frontend & Backend",
+  "private": true,
   "scripts": {
-    "start": "node app.js",
-    "dev": "nodemon --watch .env --ext js,mjs,cjs,json,env app.js",
-    "build": "npm --prefix Frontend install && npm --prefix Frontend run build"
-  },
-  "engines": {
-    "node": ">=20.19.0"
-  },
-  "dependencies": {
-    "bcrypt": "^6.0.0",
-    "cors": "^2.8.5",
-    "express": "^5.2.1",
-    "jsonwebtoken": "^9.0.3",
-    "mongoose": "^9.1.2",
-    "socket.io": "^4.8.3"
+    "dev": "concurrently --kill-others-on-fail \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:backend": "npm --prefix Backend run dev",
+    "dev:frontend": "npm --prefix Frontend run dev",
+    "start": "npm --prefix Backend start",
+    "build": "npm --prefix Frontend run build",
+    "install:all": "npm --prefix Backend install && npm --prefix Frontend install"
   },
   "devDependencies": {
-    "nodemon": "^3.1.11"
+    "concurrently": "^9.2.4"
   }
 }

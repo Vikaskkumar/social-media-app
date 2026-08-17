@@ -8,7 +8,6 @@ import Profile from './pages/Profile'
 import Signup from './pages/Signup'
 import Signin from './pages/Signin'
 import CreatePost from './pages/CreatePost'
-import Chat from './pages/Chat'
 import Modal from './components/Modal'
 import UserProfile from './components/UserProfile'
 
@@ -34,7 +33,6 @@ const App = () => {
           <Route path='/Signin' element={<Signin/>}> </Route>
           <Route path='/Profile' element={userLogin ? <Profile/> : <Navigate to="/Signin" replace />}> </Route>
           <Route path='/CreatePost' element={userLogin ? <CreatePost/> : <Navigate to="/Signin" replace />}> </Route>
-          <Route path='/Chat' element={userLogin ? <Chat/> : <Navigate to="/Signin" replace />}> </Route>
           <Route path='/profile/:userid' element={userLogin ? <UserProfile/> : <Navigate to="/Signin" replace />}> </Route>
           <Route path='/followingpost' element={userLogin ? <Myfollowingpost/> : <Navigate to="/Signin" replace />}> </Route>
         </Routes>

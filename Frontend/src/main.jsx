@@ -4,16 +4,14 @@ import { BrowserRouter } from "react-router-dom";
 
 import App from "./App.jsx";
 import "./index.css";
+import "./api/config.js";
 import { LoginProvider } from "./context/LoginContext.jsx";
-import { ChatProvider } from "./context/ChatContext.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
       <LoginProvider>
-        <ChatProvider>
-          <App />
-        </ChatProvider>
+        <App />
       </LoginProvider>
     </BrowserRouter>
   </StrictMode>

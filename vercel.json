@@ -1,3 +1,29 @@
 {
-  "buildCommand": "npm run build"
+  "version": 2,
+  "builds": [
+    {
+      "src": "Backend/app.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "Frontend/package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "Backend/public"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(allposts|like|unlike|comment|createPost|myposts|myprofile|deletepost|signup|signin|user|follow|unfollow|myfollowingpost|uploadProfilePic|removeProfilePic|health)(.*)",
+      "dest": "Backend/app.js"
+    },
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "Backend/public/index.html"
+    }
+  ]
 }

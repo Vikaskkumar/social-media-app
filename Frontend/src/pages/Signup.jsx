@@ -54,14 +54,9 @@ export default function Signup() {
   };
 
   return (
-    <div
-      className="relative min-h-screen w-screen bg-cover bg-center flex items-center justify-center"
-      style={{ backgroundImage: `url(${signuplogo})` }}
-    >
-      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
-
-      <div className="relative z-10 w-96 p-8 bg-black/80 rounded-2xl shadow-[0_0_40px_rgba(0,255,255,0.25)]">
-        <h1 className="text-2xl font-bold text-center text-cyan-300 mb-6">
+    <div className="relative min-h-screen w-screen bg-zinc-50 dark:bg-zinc-950 flex items-center justify-center transition-colors duration-300">
+      <div className="relative z-10 w-96 p-8 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl shadow-sm">
+        <h1 className="text-2xl font-bold text-center text-zinc-900 dark:text-white mb-6">
           Create Account
         </h1>
 
@@ -73,7 +68,7 @@ export default function Signup() {
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Full name"
-            className="w-full px-4 py-2 rounded-lg bg-black/60 text-white outline-none border border-cyan-500/20 focus:border-cyan-400 transition"
+            className="w-full px-4 py-2 rounded-lg bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-white outline-none border border-zinc-200 dark:border-zinc-800 focus:border-zinc-400 dark:focus:border-zinc-600 transition"
           />
 
           <input
@@ -83,7 +78,7 @@ export default function Signup() {
             value={userName}
             onChange={(e) => setUserName(e.target.value)}
             placeholder="Username"
-            className="w-full px-4 py-2 rounded-lg bg-black/60 text-white outline-none border border-cyan-500/20 focus:border-cyan-400 transition"
+            className="w-full px-4 py-2 rounded-lg bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-white outline-none border border-zinc-200 dark:border-zinc-800 focus:border-zinc-400 dark:focus:border-zinc-600 transition"
           />
 
           <input
@@ -93,7 +88,7 @@ export default function Signup() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Email"
-            className="w-full px-4 py-2 rounded-lg bg-black/60 text-white outline-none border border-cyan-500/20 focus:border-cyan-400 transition"
+            className="w-full px-4 py-2 rounded-lg bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-white outline-none border border-zinc-200 dark:border-zinc-800 focus:border-zinc-400 dark:focus:border-zinc-600 transition"
           />
 
           <input
@@ -103,21 +98,21 @@ export default function Signup() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Password"
-            className="w-full px-4 py-2 rounded-lg bg-black/60 text-white outline-none border border-cyan-500/20 focus:border-cyan-400 transition"
+            className="w-full px-4 py-2 rounded-lg bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-white outline-none border border-zinc-200 dark:border-zinc-800 focus:border-zinc-400 dark:focus:border-zinc-600 transition"
           />
 
           <button
             type="button"
             onClick={postData}
-            className="w-full py-2.5 rounded-lg bg-cyan-500 text-black font-semibold hover:bg-cyan-400 transition-all duration-300"
+            className="w-full py-2.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-white dark:bg-zinc-100 dark:hover:bg-zinc-200 dark:text-zinc-900 font-semibold transition cursor-pointer"
           >
             Sign Up
           </button>
         </form>
 
-        <p className="text-center text-xs text-gray-400 mt-5">
+        <p className="text-center text-xs text-zinc-500 dark:text-zinc-400 mt-5">
           Already have an account?{" "}
-          <Link to="/Signin" className="text-cyan-300 hover:text-cyan-400">
+          <Link to="/Signin" className="text-zinc-900 dark:text-white hover:underline font-semibold">
             Sign In
           </Link>
         </p>

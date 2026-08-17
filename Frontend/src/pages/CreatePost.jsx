@@ -114,42 +114,42 @@ export default function CreatePost() {
   };
 
   return (
-    <div className="min-h-screen bg-neutral-950 text-neutral-100 flex items-center justify-center p-4 md:p-8 font-sans">
+    <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-50 flex items-center justify-center p-4 md:p-8 font-sans transition-colors duration-300">
       {/* Container - Split Studio Viewport */}
-      <div className="w-full max-w-5xl bg-neutral-900/90 border border-neutral-800 rounded-3xl shadow-2xl backdrop-blur-xl overflow-hidden grid grid-cols-1 md:grid-cols-12">
+      <div className="w-full max-w-5xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl shadow-sm overflow-hidden grid grid-cols-1 md:grid-cols-12">
 
         {/* LEFT COLUMN: Media Canvas & Preview Controls (7 cols) */}
-        <div className="md:col-span-7 bg-neutral-950/80 border-b md:border-b-0 md:border-r border-neutral-800 p-6 flex flex-col justify-between relative min-h-[420px]">
+        <div className="md:col-span-7 bg-zinc-50/50 dark:bg-zinc-900/40 border-b md:border-b-0 md:border-r border-zinc-200 dark:border-zinc-800 p-6 flex flex-col justify-between relative min-h-[420px]">
 
           {/* Canvas Toolbar */}
           <div className="flex items-center justify-between mb-4 z-10">
             <button
               onClick={() => navigate(-1)}
-              className="text-xs font-semibold text-neutral-400 hover:text-white flex items-center gap-2 bg-neutral-900 border border-neutral-800 px-3 py-1.5 rounded-xl transition"
+              className="text-xs font-semibold text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white flex items-center gap-2 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 px-3 py-1.5 rounded-xl transition cursor-pointer"
             >
               <ArrowLeftIcon className="w-4 h-4" /> Discard
             </button>
 
             {/* Aspect Ratio Selector Pills */}
             {previewUrl && (
-              <div className="flex items-center gap-1 bg-neutral-900 border border-neutral-800 p-1 rounded-xl">
+              <div className="flex items-center gap-1 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 p-1 rounded-xl">
                 <button
                   onClick={() => setAspectRatio("square")}
-                  className={`px-2.5 py-1 text-[11px] font-semibold rounded-lg transition ${aspectRatio === "square" ? "bg-neutral-800 text-white" : "text-neutral-400 hover:text-neutral-200"
+                  className={`px-2.5 py-1 text-[11px] font-semibold rounded-lg transition cursor-pointer ${aspectRatio === "square" ? "bg-zinc-150 dark:bg-zinc-800 text-zinc-900 dark:text-white" : "text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-200"
                     }`}
                 >
                   1:1
                 </button>
                 <button
                   onClick={() => setAspectRatio("portrait")}
-                  className={`px-2.5 py-1 text-[11px] font-semibold rounded-lg transition ${aspectRatio === "portrait" ? "bg-neutral-800 text-white" : "text-neutral-400 hover:text-neutral-200"
+                  className={`px-2.5 py-1 text-[11px] font-semibold rounded-lg transition cursor-pointer ${aspectRatio === "portrait" ? "bg-zinc-150 dark:bg-zinc-800 text-zinc-900 dark:text-white" : "text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-200"
                     }`}
                 >
                   4:5
                 </button>
                 <button
                   onClick={() => setAspectRatio("landscape")}
-                  className={`px-2.5 py-1 text-[11px] font-semibold rounded-lg transition ${aspectRatio === "landscape" ? "bg-neutral-800 text-white" : "text-neutral-400 hover:text-neutral-200"
+                  className={`px-2.5 py-1 text-[11px] font-semibold rounded-lg transition cursor-pointer ${aspectRatio === "landscape" ? "bg-zinc-150 dark:bg-zinc-800 text-zinc-900 dark:text-white" : "text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-200"
                     }`}
                 >
                   16:9
@@ -163,11 +163,11 @@ export default function CreatePost() {
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
             onDrop={handleDrop}
-            className={`relative w-full my-auto rounded-2xl overflow-hidden border transition-all duration-300 flex items-center justify-center ${isDragging
-              ? "border-violet-500 bg-violet-500/10 scale-[0.99]"
+            className={`relative w-full my-auto rounded-xl overflow-hidden border transition-all duration-300 flex items-center justify-center ${isDragging
+              ? "border-zinc-400 bg-zinc-200/20 dark:border-zinc-650 dark:bg-zinc-800/20 scale-[0.99]"
               : previewUrl
-                ? "border-neutral-800 bg-neutral-950"
-                : "border-dashed border-neutral-800 hover:border-neutral-700 bg-neutral-900/40"
+                ? "border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950"
+                : "border-dashed border-zinc-300 dark:border-zinc-700 hover:border-zinc-400 bg-zinc-50/50 dark:bg-zinc-950/20"
               }`}
           >
             <input
@@ -186,8 +186,8 @@ export default function CreatePost() {
                 />
 
                 {/* Hover Quick Actions */}
-                <div className="absolute inset-0 bg-neutral-950/60 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center gap-3 z-30">
-                  <label className="cursor-pointer bg-neutral-900/90 text-white border border-neutral-700 px-4 py-2 rounded-xl text-xs font-semibold shadow-lg hover:bg-neutral-800 transition">
+                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center gap-3 z-30">
+                  <label className="cursor-pointer bg-zinc-900 hover:bg-zinc-800 dark:bg-zinc-100 dark:hover:bg-zinc-200 text-white dark:text-zinc-900 px-4 py-2 rounded-xl text-xs font-semibold shadow-sm transition">
                     Replace Photo
                     <input
                       type="file"
@@ -198,7 +198,7 @@ export default function CreatePost() {
                   </label>
                   <button
                     onClick={() => setImage(null)}
-                    className="p-2 bg-rose-500/80 hover:bg-rose-600 text-white rounded-xl backdrop-blur-md transition"
+                    className="p-2 bg-rose-550 hover:bg-rose-600 text-white rounded-xl backdrop-blur-md transition cursor-pointer"
                     title="Remove Image"
                   >
                     <TrashIcon className="w-4 h-4" />
@@ -207,21 +207,21 @@ export default function CreatePost() {
               </div>
             ) : (
               <div className="py-16 px-6 text-center space-y-3 pointer-events-none">
-                <div className="w-14 h-14 rounded-2xl bg-neutral-800/80 border border-neutral-700/60 flex items-center justify-center mx-auto text-violet-400">
+                <div className="w-14 h-14 rounded-xl bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 flex items-center justify-center mx-auto text-zinc-500">
                   <ImageIcon className="w-7 h-7" />
                 </div>
                 <div className="space-y-1">
-                  <p className="text-sm font-semibold text-neutral-200">
-                    Drag media here or <span className="text-violet-400 underline">browse</span>
+                  <p className="text-sm font-semibold text-zinc-700 dark:text-zinc-300">
+                    Drag media here or <span className="text-zinc-900 dark:text-white underline">browse</span>
                   </p>
-                  <p className="text-xs text-neutral-500">High resolution JPG, PNG or WEBP</p>
+                  <p className="text-xs text-zinc-400 dark:text-zinc-500">High resolution JPG, PNG or WEBP</p>
                 </div>
               </div>
             )}
           </div>
 
           {/* Canvas Footer Bar */}
-          <div className="mt-4 flex items-center justify-between text-[11px] text-neutral-500 font-mono">
+          <div className="mt-4 flex items-center justify-between text-[11px] text-zinc-500 dark:text-zinc-400 font-mono">
             <span>{image ? `${(image.size / (1024 * 1024)).toFixed(2)} MB` : "No media selected"}</span>
             <span className="uppercase">{aspectRatio} view</span>
           </div>
@@ -231,19 +231,19 @@ export default function CreatePost() {
         <div className="md:col-span-5 p-6 flex flex-col justify-between space-y-6">
 
           {/* Creator Profile Header */}
-          <div className="flex items-center justify-between pb-4 border-b border-neutral-800">
+          <div className="flex items-center justify-between pb-4 border-b border-zinc-200 dark:border-zinc-800">
             <div className="flex items-center gap-3">
               <img
                 src={currentUser.Photo || profilepic}
                 alt="Profile"
-                className="w-10 h-10 rounded-full object-cover border border-violet-500/40"
+                className="w-10 h-10 rounded-full object-cover border border-zinc-200 dark:border-zinc-800"
               />
               <div>
-                <h4 className="text-sm font-bold text-white leading-tight">
+                <h4 className="text-sm font-bold text-zinc-900 dark:text-white leading-tight">
                   {currentUser.name || "You"}
                 </h4>
-                <span className="inline-flex items-center gap-1 text-[10px] font-medium text-emerald-400">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" /> Active Creator
+                <span className="inline-flex items-center gap-1 text-[10px] font-medium text-emerald-500">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" /> Active Creator
                 </span>
               </div>
             </div>
@@ -251,7 +251,7 @@ export default function CreatePost() {
             <button
               onClick={postData}
               disabled={isSubmitting || !image || !body.trim()}
-              className="px-5 py-2 bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 disabled:opacity-40 disabled:cursor-not-allowed text-white text-xs font-bold rounded-xl transition shadow-lg shadow-violet-600/20 flex items-center gap-2"
+              className="px-5 py-2 bg-zinc-900 hover:bg-zinc-800 text-white dark:bg-zinc-100 dark:hover:bg-zinc-200 dark:text-zinc-900 disabled:opacity-40 disabled:cursor-not-allowed text-xs font-bold rounded-xl transition flex items-center gap-2 cursor-pointer"
             >
               {isSubmitting ? (
                 <>
@@ -266,7 +266,7 @@ export default function CreatePost() {
 
           {/* Caption Input Section */}
           <div className="space-y-3 flex-1 flex flex-col">
-            <label className="text-xs font-semibold text-neutral-400 uppercase tracking-wider">
+            <label className="text-xs font-semibold text-zinc-500 dark:text-zinc-450 uppercase tracking-wider">
               Caption
             </label>
             <div className="relative flex-1">
@@ -275,9 +275,9 @@ export default function CreatePost() {
                 value={body}
                 maxLength={MAX_CAPTION_LENGTH}
                 onChange={(e) => setBody(e.target.value)}
-                className="w-full h-full min-h-[140px] bg-neutral-950/60 border border-neutral-800 focus:border-violet-500/60 rounded-2xl p-4 text-xs sm:text-sm text-neutral-100 placeholder-neutral-500 outline-none resize-none transition"
+                className="w-full h-full min-h-[140px] bg-zinc-50 dark:bg-zinc-950/50 border border-zinc-200 dark:border-zinc-800 focus:border-zinc-400 dark:focus:border-zinc-600 rounded-xl p-4 text-xs sm:text-sm text-zinc-900 dark:text-white placeholder-zinc-400 dark:placeholder-zinc-600 outline-none resize-none transition"
               />
-              <span className="absolute bottom-3 right-3 text-[10px] font-mono text-neutral-500 bg-neutral-900/80 px-2 py-0.5 rounded-md border border-neutral-800">
+              <span className="absolute bottom-3 right-3 text-[10px] font-mono text-zinc-500 bg-white dark:bg-zinc-900 px-2 py-0.5 rounded-md border border-zinc-200 dark:border-zinc-800">
                 {body.length}/{MAX_CAPTION_LENGTH}
               </span>
             </div>
@@ -288,7 +288,7 @@ export default function CreatePost() {
                 <button
                   key={tag}
                   onClick={() => addHashtag(tag)}
-                  className="text-[11px] text-neutral-400 hover:text-violet-300 bg-neutral-950 border border-neutral-800 hover:border-violet-500/40 px-2.5 py-1 rounded-lg transition"
+                  className="text-[11px] text-zinc-650 dark:text-zinc-350 hover:text-zinc-900 dark:hover:text-white bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-800 px-2.5 py-1 rounded-lg transition cursor-pointer"
                 >
                   {tag}
                 </button>
@@ -297,20 +297,20 @@ export default function CreatePost() {
           </div>
 
           {/* Additional Post Settings */}
-          <div className="space-y-3 pt-2 border-t border-neutral-800/80">
+          <div className="space-y-3 pt-2 border-t border-zinc-200 dark:border-zinc-800/85">
             {/* Location Tag */}
             <div>
-              <label className="text-[11px] font-semibold text-neutral-400 block mb-1.5">
+              <label className="text-[11px] font-semibold text-zinc-500 dark:text-zinc-450 block mb-1.5">
                 Location Tag
               </label>
               <div className="relative">
-                <MapPinIcon className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500" />
+                <MapPinIcon className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400 dark:text-zinc-500" />
                 <input
                   type="text"
                   placeholder="e.g. Tokyo, Japan"
                   value={location}
                   onChange={(e) => setLocation(e.target.value)}
-                  className="w-full bg-neutral-950/60 border border-neutral-800 focus:border-violet-500/60 rounded-xl pl-9 pr-3 py-2 text-xs text-neutral-200 placeholder-neutral-500 outline-none transition"
+                  className="w-full bg-zinc-50 dark:bg-zinc-950/50 border border-zinc-200 dark:border-zinc-800 focus:border-zinc-450 dark:focus:border-zinc-600 rounded-xl pl-9 pr-3 py-2 text-xs text-zinc-900 dark:text-white placeholder-zinc-400 dark:placeholder-zinc-650 outline-none transition"
                 />
               </div>
             </div>

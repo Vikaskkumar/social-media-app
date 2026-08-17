@@ -69,6 +69,7 @@ export default function Myfollowingpost() {
       body: JSON.stringify({ postId: id, text }),
     })
       .then(res => res.json())
+
       .then(updatedPost => {
         setData(prev => prev.map(p => (p._id === updatedPost._id ? updatedPost : p)));
         setCommentText(prev => ({ ...prev, [id]: "" }));
@@ -76,26 +77,26 @@ export default function Myfollowingpost() {
   };
 
   return (
-    <div className="pt-20 min-h-screen bg-black flex justify-center">
+    <div className="pt-20 min-h-screen bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-50 flex justify-center">
       <div className="w-full max-w-xl px-3 space-y-6">
 
         {data.map(post => (
           <div
             key={post._id}
-            className="bg-[#0b0b0b] border border-white/10 rounded-2xl overflow-hidden shadow-lg hover:shadow-cyan-500/10 transition"
+            className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl overflow-hidden"
           >
 
             {/* HEADER */}
-            <div className="flex items-center gap-3 px-4 py-3 border-b border-white/5">
-              <img src={post.postedBy?.Photo || userimg} alt="" className="h-9 w-9 rounded-full ring-2 ring-cyan-500/20" />
+            <div className="flex items-center gap-3 px-4 py-3 border-b border-zinc-200 dark:border-zinc-800">
+              <img src={post.postedBy?.Photo || userimg} alt="" className="h-9 w-9 rounded-full border border-zinc-200 dark:border-zinc-800 object-cover" />
               <div>
                 <Link
                   to={`/profile/${post.postedBy?._id}`}
-                  className="text-white text-sm font-semibold hover:text-cyan-400"
+                  className="text-zinc-900 dark:text-white text-sm font-semibold hover:underline"
                 >
                   {post.postedBy?.name || "Unknown"}
                 </Link>
-                <p className="text-xs text-slate-500 flex items-center gap-1">
+                <p className="text-xs text-zinc-500 dark:text-zinc-400 flex items-center gap-1">
                   <Code2 size={12} /> Developer
                 </p>
               </div>
@@ -110,7 +111,7 @@ export default function Myfollowingpost() {
 
             {/* ACTIONS */}
             <div className="px-4 py-3 space-y-3">
-              <div className="flex justify-between items-center text-slate-400">
+              <div className="flex justify-between items-center text-zinc-500 dark:text-zinc-400">
                 <div className="flex gap-5">
                   <Heart
                     onClick={() =>
@@ -121,26 +122,26 @@ export default function Myfollowingpost() {
                     className={`cursor-pointer transition-transform hover:scale-110 ${
                       post.likes?.includes(user._id)
                         ? "text-red-500 fill-red-500"
-                        : "hover:text-red-400"
+                        : "hover:text-red-500"
                     }`}
                   />
                   <MessageCircle
-                    className="cursor-pointer hover:text-cyan-400"
+                    className="cursor-pointer hover:text-zinc-900 dark:hover:text-white"
                     onClick={() =>
                       setOpenComments(prev => ({ ...prev, [post._id]: !prev[post._id] }))
                     }
                   />
-                  <Send className="hover:text-green-400 cursor-pointer" />
+                  <Send className="hover:text-zinc-900 dark:hover:text-white cursor-pointer" />
                 </div>
-                <Bookmark className="hover:text-yellow-400 cursor-pointer" />
+                <Bookmark className="hover:text-zinc-900 dark:hover:text-white cursor-pointer" />
               </div>
 
-              <p className="text-white text-sm font-semibold">
+              <p className="text-zinc-900 dark:text-white text-sm font-semibold">
                 {post.likes?.length || 0} developers liked this
               </p>
 
-              <p className="text-slate-300 text-sm leading-relaxed">
-                <span className="text-white font-semibold mr-1">
+              <p className="text-zinc-800 dark:text-zinc-300 text-sm leading-relaxed">
+                <span className="text-zinc-900 dark:text-white font-semibold mr-1">
                   {post.postedBy?.name || "Unknown"}
                 </span>
                 {post.body}
@@ -149,9 +150,9 @@ export default function Myfollowingpost() {
 
             {/* COMMENTS */}
             {openComments[post._id] && (
-              <div className="bg-black/70 border-t border-white/10 px-4 py-4 space-y-4">
+              <div className="bg-zinc-50/70 dark:bg-zinc-950/50 border-t border-zinc-200 dark:border-zinc-800 px-4 py-4 space-y-4">
 
-                <p className="text-xs text-slate-400 uppercase tracking-widest">
+                <p className="text-xs text-zinc-500 dark:text-zinc-400 uppercase tracking-widest">
                   Comments
                 </p>
 
@@ -159,19 +160,19 @@ export default function Myfollowingpost() {
                   {post.comments?.map((c) => (
                     <div key={c._id} className="flex gap-3 items-start group">
                       <img
-                        src={userimg}
-                        className="h-8 w-8 rounded-full ring-2 ring-cyan-500/20 object-cover"
+                        src={c.postedBy?.Photo || userimg}
+                        className="h-8 w-8 rounded-full border border-zinc-200 dark:border-zinc-800 object-cover"
                       />
 
-                      <div className="flex-1 bg-white/5 rounded-2xl px-3 py-2 group-hover:bg-white/10 transition">
+                      <div className="flex-1 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl px-3 py-2">
                         <div className="flex items-center justify-between">
-                          <p className="text-sm font-semibold text-white">
+                          <p className="text-sm font-semibold text-zinc-900 dark:text-white">
                             {c.postedBy?.name || "User"}
                           </p>
-                          <span className="text-xs text-slate-500">now</span>
+                          <span className="text-xs text-zinc-400 dark:text-zinc-500">now</span>
                         </div>
 
-                        <p className="text-sm text-slate-300 leading-relaxed mt-0.5">
+                        <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed mt-0.5">
                           {c.comment}
                         </p>
                       </div>
@@ -180,10 +181,10 @@ export default function Myfollowingpost() {
                 </div>
 
                 {/* ADD COMMENT */}
-                <div className="flex items-center gap-3 pt-3 border-t border-white/10">
+                <div className="flex items-center gap-3 pt-3 border-t border-zinc-200 dark:border-zinc-800">
                   <img
-                    src={userimg}
-                    className="h-8 w-8 rounded-full ring-2 ring-cyan-500/20"
+                    src={user.Photo || userimg}
+                    className="h-8 w-8 rounded-full border border-zinc-200 dark:border-zinc-800 object-cover"
                   />
                   <input
                     type="text"
@@ -195,11 +196,11 @@ export default function Myfollowingpost() {
                       }))
                     }
                     placeholder="Write a comment..."
-                    className="flex-1 bg-transparent text-sm text-slate-200 outline-none border-b border-white/10 focus:border-cyan-400 transition pb-1"
+                    className="flex-1 bg-transparent text-sm text-zinc-900 dark:text-zinc-100 outline-none border-b border-zinc-200 dark:border-zinc-800 focus:border-zinc-400 dark:focus:border-zinc-600 transition pb-1"
                   />
                   <button
                     onClick={() => makeComment(commentText[post._id], post._id)}
-                    className="text-cyan-400 text-sm font-semibold hover:text-cyan-300"
+                    className="text-zinc-900 dark:text-white text-sm font-semibold hover:underline"
                   >
                     Post
                   </button>

@@ -68,16 +68,16 @@ export default function ProfilePic({ close, onSaved }) {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
-      <div className="bg-white text-black w-72 rounded-lg overflow-hidden">
-        <h2 className="text-center font-semibold py-3 border-b">Change Profile Photo</h2>
-        <button disabled={isSaving} onClick={() => fileRef.current?.click()} className="w-full py-3 hover:bg-gray-100 disabled:opacity-50">
+    <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 transition-all">
+      <div className="bg-white dark:bg-zinc-900 text-zinc-900 dark:text-white w-72 rounded-xl border border-zinc-200 dark:border-zinc-800 overflow-hidden shadow-xl">
+        <h2 className="text-center font-bold py-3 border-b border-zinc-200 dark:border-zinc-800 text-sm">Change Profile Photo</h2>
+        <button disabled={isSaving} onClick={() => fileRef.current?.click()} className="w-full py-3 hover:bg-zinc-50 dark:hover:bg-zinc-800/50 text-sm font-semibold transition cursor-pointer disabled:opacity-50">
           Upload Photo
         </button>
-        <button disabled={isSaving} className="w-full py-3 text-red-500 hover:bg-gray-100 disabled:opacity-50" onClick={removePic}>
+        <button disabled={isSaving} className="w-full py-3 text-red-600 hover:bg-zinc-50 dark:hover:bg-zinc-800/50 text-sm font-semibold transition cursor-pointer disabled:opacity-50" onClick={removePic}>
           Remove Photo
         </button>
-        <button disabled={isSaving} onClick={close} className="w-full py-3 text-gray-500 hover:bg-gray-100 disabled:opacity-50">
+        <button disabled={isSaving} onClick={close} className="w-full py-3 text-zinc-500 hover:bg-zinc-50 dark:hover:bg-zinc-800/50 text-sm font-semibold transition border-t border-zinc-200 dark:border-zinc-800 cursor-pointer disabled:opacity-50">
           Cancel
         </button>
         <input type="file" hidden ref={fileRef} accept="image/*" onChange={(event) => uploadPhoto(event.target.files?.[0])} />

@@ -30,7 +30,7 @@ export default function PostDetails({ post, close, setPosts, showDelete = true }
   if (!post) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 transition-all">
 
       {/* backdrop */}
       <div
@@ -39,10 +39,10 @@ export default function PostDetails({ post, close, setPosts, showDelete = true }
       />
 
       {/* modal */}
-      <div className="relative flex w-[90%] max-w-4xl overflow-hidden rounded-xl bg-[#0b0b0b] shadow-2xl">
+      <div className="relative flex w-[90%] max-w-4xl overflow-hidden rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-xl">
 
         {/* image */}
-        <div className="w-1/2 bg-black">
+        <div className="w-1/2 bg-zinc-50 dark:bg-zinc-950 border-r border-zinc-200 dark:border-zinc-800 flex items-center justify-center">
           <img
             src={post.photo}
             alt="post"
@@ -51,24 +51,24 @@ export default function PostDetails({ post, close, setPosts, showDelete = true }
         </div>
 
         {/* details */}
-        <div className="flex w-1/2 flex-col p-4 text-white">
+        <div className="flex w-1/2 flex-col p-6 text-zinc-900 dark:text-zinc-50">
 
           {/* header */}
-          <div className="flex items-center justify-between border-b border-slate-700 pb-2">
-            <h2 className="font-semibold">{post.postedBy?.name || "Unknown"}</h2>
+          <div className="flex items-center justify-between border-b border-zinc-200 dark:border-zinc-800 pb-3">
+            <h2 className="font-bold text-zinc-900 dark:text-white">{post.postedBy?.name || "Unknown"}</h2>
             <button
               onClick={close}
-              className="text-xl hover:opacity-70"
+              className="text-xl text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition cursor-pointer"
             >
               ✕
             </button>
           </div>
 
           {/* caption */}
-          <p className="mt-4 text-gray-300">{post.body}</p>
+          <p className="mt-4 text-zinc-650 dark:text-zinc-300 text-sm leading-relaxed">{post.body}</p>
 
           {/* likes */}
-          <p className="mt-2 text-sm text-gray-400">
+          <p className="mt-4 text-xs font-semibold text-zinc-500 dark:text-zinc-400">
             {post.likes.length} likes
           </p>
 
@@ -76,7 +76,7 @@ export default function PostDetails({ post, close, setPosts, showDelete = true }
           {showDelete && (
             <button
               onClick={handleDelete}
-              className="mt-auto rounded-lg bg-red-600 py-2 text-white transition hover:bg-red-700"
+              className="mt-auto rounded-xl bg-red-600 hover:bg-red-700 text-white text-xs font-bold py-2.5 transition cursor-pointer"
             >
               Delete Post
             </button>

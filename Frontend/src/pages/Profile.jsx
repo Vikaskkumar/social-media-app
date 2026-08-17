@@ -77,15 +77,11 @@ export default function Profile() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 selection:bg-indigo-500 selection:text-white">
-      {/* Ambient Glows */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
-        <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[650px] h-[320px] bg-gradient-to-tr from-indigo-600/20 to-purple-600/10 blur-[130px] rounded-full" />
-      </div>
+    <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-50 transition-colors duration-300 font-sans">
 
       {/* Share Toast */}
       {copiedToast && (
-        <div className="fixed top-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-2 px-4 py-2.5 rounded-full bg-slate-900 border border-indigo-500/50 backdrop-blur-md shadow-2xl text-xs font-medium text-indigo-300 animate-bounce">
+        <div className="fixed top-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-2 px-4 py-2.5 rounded-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-lg text-xs font-medium text-zinc-900 dark:text-white animate-bounce">
           <CheckIcon className="w-4 h-4 text-emerald-400" />
           Profile link copied to clipboard!
         </div>
@@ -96,20 +92,17 @@ export default function Profile() {
         {isLoading ? (
           <ProfileSkeleton />
         ) : (
-          <div className="p-6 sm:p-8 rounded-3xl bg-slate-900/40 border border-slate-800/80 backdrop-blur-xl shadow-2xl space-y-6 transition-all duration-300">
+          <div className="p-6 sm:p-8 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-sm space-y-6 transition-all duration-300">
             <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 sm:gap-8">
               {/* Avatar Container */}
-              <div className="relative group cursor-pointer" onClick={() => setChangePic(true)}>
-                <div className="absolute -inset-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-full blur opacity-60 group-hover:opacity-100 transition duration-500" />
-                <div className="relative p-1 bg-slate-950 rounded-full">
-                  <img
-                    src={user?.Photo || profilepic}
-                    alt="profile"
-                    className="h-28 w-28 sm:h-32 sm:w-32 rounded-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                </div>
-                <div className="absolute inset-1 rounded-full bg-slate-950/60 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center text-white text-xs font-medium gap-1">
-                  <CameraIcon className="w-5 h-5 text-indigo-300" />
+              <div className="relative group cursor-pointer border border-zinc-200 dark:border-zinc-800 rounded-full overflow-hidden" onClick={() => setChangePic(true)}>
+                <img
+                  src={user?.Photo || profilepic}
+                  alt="profile"
+                  className="h-28 w-28 sm:h-32 sm:w-32 rounded-full object-cover"
+                />
+                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center text-white text-xs font-medium gap-1">
+                  <CameraIcon className="w-5 h-5 text-zinc-300" />
                   <span>Update</span>
                 </div>
               </div>
@@ -118,16 +111,16 @@ export default function Profile() {
               <div className="flex-1 text-center sm:text-left space-y-3">
                 <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
                   <div>
-                    <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white flex items-center justify-center sm:justify-start gap-2">
+                    <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-zinc-900 dark:text-white flex items-center justify-center sm:justify-start gap-2">
                       {user?.name || "Developer"}
-                      <span className="p-1 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
+                      <span className="p-1 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400 border border-zinc-200 dark:border-zinc-700">
                         <SparklesIcon className="w-4 h-4" />
                       </span>
                     </h1>
-                    <p className="text-slate-400 text-xs sm:text-sm font-medium mt-0.5 flex items-center justify-center sm:justify-start gap-3">
+                    <p className="text-zinc-500 dark:text-zinc-400 text-xs sm:text-sm font-medium mt-0.5 flex items-center justify-center sm:justify-start gap-3">
                       <span>Full-stack Engineer</span>
-                      <span className="w-1 h-1 rounded-full bg-slate-700" />
-                      <span className="flex items-center gap-1 text-slate-500">
+                      <span className="w-1 h-1 rounded-full bg-zinc-350 dark:bg-zinc-700" />
+                      <span className="flex items-center gap-1 text-zinc-400 dark:text-zinc-500">
                         <MapPinIcon className="w-3 h-3" /> San Francisco, CA
                       </span>
                     </p>
@@ -137,13 +130,13 @@ export default function Profile() {
                   <div className="flex items-center gap-2">
                     <button
                       onClick={() => setChangePic(true)}
-                      className="px-3.5 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-semibold transition shadow-lg shadow-indigo-600/20 flex items-center gap-1.5"
+                      className="px-3.5 py-1.5 bg-zinc-900 hover:bg-zinc-800 text-white dark:bg-zinc-100 dark:hover:bg-zinc-200 dark:text-zinc-900 rounded-xl text-xs font-semibold transition flex items-center gap-1.5 cursor-pointer"
                     >
                       <SettingsIcon className="w-3.5 h-3.5" /> Edit Profile
                     </button>
                     <button
                       onClick={handleCopyShareLink}
-                      className="p-2 bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white rounded-xl transition border border-slate-700/60"
+                      className="p-2 bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white rounded-xl transition border border-zinc-200 dark:border-zinc-700 cursor-pointer"
                       title="Share Profile"
                     >
                       <ShareIcon className="w-4 h-4" />
@@ -156,7 +149,7 @@ export default function Profile() {
                   {["React", "Node.js", "TypeScript", "Tailwind"].map((tag) => (
                     <span
                       key={tag}
-                      className="px-2.5 py-0.5 rounded-full text-[10px] font-medium bg-slate-800/60 text-slate-300 border border-slate-700/50"
+                      className="px-2.5 py-0.5 rounded-full text-[10px] font-medium bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-700"
                     >
                       {tag}
                     </span>
@@ -164,7 +157,7 @@ export default function Profile() {
                 </div>
 
                 {/* Stats Bar */}
-                <div className="pt-3 border-t border-slate-800/60 flex justify-center sm:justify-start gap-8">
+                <div className="pt-3 border-t border-zinc-200 dark:border-zinc-805 flex justify-center sm:justify-start gap-8">
                   <StatItem label="posts" value={posts.length} />
                   <StatItem label="followers" value={user?.followers?.length || 0} />
                   <StatItem label="following" value={user?.following?.length || 0} />
@@ -175,7 +168,7 @@ export default function Profile() {
         )}
 
         {/* Tab & Grid Switcher Bar */}
-        <div className="mt-10 mb-6 flex flex-col sm:flex-row items-center justify-between gap-4 border-b border-slate-800/80 pb-4">
+        <div className="mt-10 mb-6 flex flex-col sm:flex-row items-center justify-between gap-4 border-b border-zinc-200 dark:border-zinc-800 pb-4">
           <div className="flex items-center gap-2">
             {[
               { id: "posts", label: "Posts", Icon: GridIcon },
@@ -187,9 +180,9 @@ export default function Profile() {
                 <button
                   key={id}
                   onClick={() => setActiveTab(id)}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all duration-200 ${isActive
-                    ? "bg-indigo-600/20 border border-indigo-500/40 text-white"
-                    : "text-slate-400 hover:text-slate-200"
+                  className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all duration-200 cursor-pointer ${isActive
+                    ? "bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900"
+                    : "text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100"
                     }`}
                 >
                   <Icon className="w-4 h-4" />
@@ -201,20 +194,20 @@ export default function Profile() {
 
           <div className="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-end">
             <div className="relative flex-1 sm:w-48">
-              <SearchIcon className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
+              <SearchIcon className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-zinc-450 dark:text-zinc-550" />
               <input
                 type="text"
                 placeholder="Search posts..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-slate-900/60 border border-slate-800 focus:border-indigo-500/50 rounded-xl pl-8 pr-3 py-1.5 text-xs text-slate-200 placeholder-slate-500 focus:outline-none transition"
+                className="w-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl pl-8 pr-3 py-1.5 text-xs text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-650 focus:outline-none transition"
               />
             </div>
 
-            <div className="flex items-center bg-slate-900/80 border border-slate-800 rounded-xl p-1 gap-1">
+            <div className="flex items-center bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-xl p-1 gap-1">
               <button
                 onClick={() => setViewMode("grid3")}
-                className={`p-1.5 rounded-lg transition ${viewMode === "grid3" ? "bg-slate-800 text-indigo-400" : "text-slate-500 hover:text-slate-300"
+                className={`p-1.5 rounded-lg transition cursor-pointer ${viewMode === "grid3" ? "bg-white dark:bg-zinc-900 text-zinc-900 dark:text-white" : "text-zinc-500"
                   }`}
                 title="3 Column Grid"
               >
@@ -222,7 +215,7 @@ export default function Profile() {
               </button>
               <button
                 onClick={() => setViewMode("grid4")}
-                className={`p-1.5 rounded-lg transition ${viewMode === "grid4" ? "bg-slate-800 text-indigo-400" : "text-slate-500 hover:text-slate-300"
+                className={`p-1.5 rounded-lg transition cursor-pointer ${viewMode === "grid4" ? "bg-white dark:bg-zinc-900 text-zinc-900 dark:text-white" : "text-zinc-500"
                   }`}
                 title="4 Column Grid"
               >
@@ -230,7 +223,7 @@ export default function Profile() {
               </button>
               <button
                 onClick={() => setViewMode("list")}
-                className={`p-1.5 rounded-lg transition ${viewMode === "list" ? "bg-slate-800 text-indigo-400" : "text-slate-500 hover:text-slate-300"
+                className={`p-1.5 rounded-lg transition cursor-pointer ${viewMode === "list" ? "bg-white dark:bg-zinc-900 text-zinc-900 dark:text-white" : "text-zinc-500"
                   }`}
                 title="List View"
               >
@@ -261,17 +254,17 @@ export default function Profile() {
               <div
                 key={post._id}
                 onClick={() => setSelectedPost(post)}
-                className={`group relative overflow-hidden bg-slate-900 border border-slate-800/80 rounded-2xl cursor-pointer shadow-lg transition-all duration-300 hover:-translate-y-1 ${viewMode === "list" ? "aspect-video" : "aspect-square"
+                className={`group relative overflow-hidden bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl cursor-pointer ${viewMode === "list" ? "aspect-video" : "aspect-square"
                   }`}
               >
                 <img
                   src={post.photo}
                   alt="post"
-                  className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+                  className="h-full w-full object-cover"
                 />
 
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
-                  <p className="text-xs text-slate-300 line-clamp-1 mb-2 font-medium">
+                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex flex-col justify-end p-4">
+                  <p className="text-xs text-zinc-200 line-clamp-1 mb-2 font-medium">
                     {post.body || post.caption || "View post details"}
                   </p>
                   <div className="flex items-center gap-4 text-white font-semibold">
@@ -279,8 +272,8 @@ export default function Profile() {
                       <HeartIcon className="w-3.5 h-3.5 fill-rose-400" />
                       <span>{post.likes?.length || 0}</span>
                     </div>
-                    <div className="flex items-center gap-1.5 text-xs text-indigo-400">
-                      <MessageCircleIcon className="w-3.5 h-3.5 fill-indigo-400" />
+                    <div className="flex items-center gap-1.5 text-xs text-zinc-300">
+                      <MessageCircleIcon className="w-3.5 h-3.5 fill-zinc-400" />
                       <span>{post.comments?.length || 0}</span>
                     </div>
                   </div>
@@ -306,8 +299,8 @@ export default function Profile() {
 function StatItem({ value, label }) {
   return (
     <div className="flex items-baseline gap-1.5 text-xs sm:text-sm">
-      <span className="font-extrabold text-white text-base sm:text-lg">{value}</span>
-      <span className="text-slate-400 capitalize text-xs">{label}</span>
+      <span className="font-extrabold text-zinc-900 dark:text-white text-base sm:text-lg">{value}</span>
+      <span className="text-zinc-500 dark:text-zinc-400 capitalize text-xs">{label}</span>
     </div>
   );
 }
@@ -315,13 +308,13 @@ function StatItem({ value, label }) {
 function EmptyState({ searchQuery }) {
   return (
     <div className="flex flex-col items-center justify-center py-20 text-center space-y-3">
-      <div className="p-4 rounded-2xl bg-slate-900 border border-slate-800 text-slate-500">
+      <div className="p-4 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-400">
         <GridIcon className="w-8 h-8" />
       </div>
-      <h3 className="text-base font-semibold text-slate-300">
+      <h3 className="text-base font-semibold text-zinc-700 dark:text-zinc-300">
         {searchQuery ? `No posts matching "${searchQuery}"` : "No posts published yet"}
       </h3>
-      <p className="text-xs text-slate-500 max-w-xs">
+      <p className="text-xs text-zinc-500 max-w-xs">
         {searchQuery ? "Try searching for a different keyword." : "Share your first photo to fill your grid."}
       </p>
     </div>
@@ -331,27 +324,27 @@ function EmptyState({ searchQuery }) {
 function EmptyTabState({ tab }) {
   return (
     <div className="flex flex-col items-center justify-center py-20 text-center space-y-3">
-      <div className="p-4 rounded-2xl bg-slate-900 border border-slate-800 text-slate-500">
+      <div className="p-4 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-400">
         {tab === "saved" ? <BookmarkIcon className="w-8 h-8" /> : <UserTagIcon className="w-8 h-8" />}
       </div>
-      <h3 className="text-base font-semibold text-slate-300 capitalize">No {tab} content</h3>
-      <p className="text-xs text-slate-500 max-w-xs">Items you save or photos you are tagged in will show up here.</p>
+      <h3 className="text-base font-semibold text-zinc-700 dark:text-zinc-300 capitalize">No {tab} content</h3>
+      <p className="text-xs text-zinc-500 max-w-xs">Items you save or photos you are tagged in will show up here.</p>
     </div>
   );
 }
 
 function ProfileSkeleton() {
   return (
-    <div className="p-6 sm:p-8 rounded-3xl bg-slate-900/40 border border-slate-800/80 animate-pulse space-y-6">
+    <div className="p-6 sm:p-8 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 animate-pulse space-y-6">
       <div className="flex flex-col sm:flex-row items-center sm:items-start gap-8">
-        <div className="h-32 w-32 rounded-full bg-slate-800" />
+        <div className="h-32 w-32 rounded-full bg-zinc-200 dark:bg-zinc-800" />
         <div className="flex-1 space-y-4 w-full">
-          <div className="h-7 w-48 bg-slate-800 rounded-lg mx-auto sm:mx-0" />
-          <div className="h-4 w-32 bg-slate-800 rounded-lg mx-auto sm:mx-0" />
+          <div className="h-7 w-48 bg-zinc-200 dark:bg-zinc-800 rounded-lg mx-auto sm:mx-0" />
+          <div className="h-4 w-32 bg-zinc-200 dark:bg-zinc-800 rounded-lg mx-auto sm:mx-0" />
           <div className="flex justify-center sm:justify-start gap-6 pt-2">
-            <div className="h-6 w-16 bg-slate-800 rounded-md" />
-            <div className="h-6 w-16 bg-slate-800 rounded-md" />
-            <div className="h-6 w-16 bg-slate-800 rounded-md" />
+            <div className="h-6 w-16 bg-zinc-200 dark:bg-zinc-800 rounded-md" />
+            <div className="h-6 w-16 bg-zinc-200 dark:bg-zinc-800 rounded-md" />
+            <div className="h-6 w-16 bg-zinc-200 dark:bg-zinc-800 rounded-md" />
           </div>
         </div>
       </div>
@@ -370,7 +363,7 @@ function GridSkeleton({ viewMode }) {
       }
     >
       {[...Array(cols)].map((_, i) => (
-        <div key={i} className="aspect-square bg-slate-900/80 border border-slate-800 rounded-2xl animate-pulse" />
+        <div key={i} className="aspect-square bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl animate-pulse" />
       ))}
     </div>
   );

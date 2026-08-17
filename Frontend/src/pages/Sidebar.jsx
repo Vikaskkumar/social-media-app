@@ -11,15 +11,15 @@ export default function Sidebar() {
         { name: "Home", path: "/", icon: HomeIcon },
         { name: "Profile", path: "/profile", icon: ProfileIcon },
         { name: "Create Post", path: "/CreatePost", icon: PlusIcon },
-        { name: "Chat", path: "/Chat", icon: DirectIcon },
         { name: "Following Posts", path: "/followingpost", icon: HeartIcon },
     ];
+
 
     return (
         <aside
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
-            className={`fixed top-0 left-0 h-screen bg-black border-r border-neutral-900 transition-all duration-300 ease-in-out z-50 flex flex-col justify-between py-5 px-3 select-none overflow-hidden ${isHovered ? "w-64 shadow-2xl shadow-cyan-950/30" : "w-16"
+            className={`fixed top-0 left-0 h-screen bg-white dark:bg-zinc-900 border-r border-zinc-200 dark:border-zinc-800 transition-all duration-300 ease-in-out z-50 flex flex-col justify-between py-5 px-3 select-none overflow-hidden ${isHovered ? "w-64 shadow-lg" : "w-16"
                 }`}
         >
             {/* Top Header / Logo Section */}
@@ -29,7 +29,7 @@ export default function Sidebar() {
                     <div className="flex justify-center mb-8">
                         <NavLink
                             to="/"
-                            className="p-2 text-white hover:bg-neutral-900 rounded-xl transition duration-200"
+                            className="p-2 text-zinc-900 dark:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-xl transition duration-200"
                             title="Instagram"
                         >
                             <InstagramIcon className="w-6 h-6" />
@@ -37,16 +37,16 @@ export default function Sidebar() {
                     </div>
                 ) : (
                     /* Expanded Menu Header (Matches Screenshot) */
-                    <div className="flex items-center justify-between px-2 pb-4 mb-3 border-b border-neutral-900 transition-opacity duration-200 opacity-100">
+                    <div className="flex items-center justify-between px-2 pb-4 mb-3 border-b border-zinc-200 dark:border-zinc-800 transition-opacity duration-200 opacity-100">
                         <div className="flex items-center gap-2">
-                            <span className="text-cyan-400 font-bold text-xl tracking-tight">Menu</span>
-                            <span className="bg-neutral-800 text-neutral-400 text-[10px] font-bold tracking-wider px-2 py-0.5 rounded-full border border-neutral-700/60 uppercase">
+                            <span className="text-zinc-900 dark:text-white font-bold text-xl tracking-tight">Menu</span>
+                            <span className="bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 text-[10px] font-bold tracking-wider px-2 py-0.5 rounded-full border border-zinc-200 dark:border-zinc-700/60 uppercase">
                                 {isDarkMode ? "DARK" : "LIGHT"}
                             </span>
                         </div>
                         <button
                             onClick={() => setIsHovered(false)}
-                            className="text-neutral-400 hover:text-white p-1 rounded-lg hover:bg-neutral-900 transition"
+                            className="text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white p-1 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 transition"
                         >
                             <CloseIcon className="w-5 h-5" />
                         </button>
@@ -63,8 +63,8 @@ export default function Sidebar() {
                                 to={item.path}
                                 className={({ isActive }) =>
                                     `flex items-center gap-3.5 px-3 py-3 rounded-2xl text-sm font-semibold transition-all duration-200 ${isActive
-                                        ? "bg-neutral-800/90 text-white shadow-sm"
-                                        : "text-neutral-300 hover:text-white hover:bg-neutral-900/80"
+                                        ? "bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-white shadow-sm"
+                                        : "text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-50 dark:hover:bg-zinc-800/50"
                                     } ${!isHovered ? "justify-center px-0" : ""}`
                                 }
                                 title={!isHovered ? item.name : undefined}
@@ -81,45 +81,7 @@ export default function Sidebar() {
                 </nav>
             </div>
 
-            {/* Bottom Section: Theme Switcher & Profile */}
-            <div className="space-y-2 pt-3 border-t border-neutral-900/80 w-full">
-                {/* Switch Theme Toggle */}
-                <button
-                    onClick={() => setIsDarkMode(!isDarkMode)}
-                    className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-2xl text-sm font-medium text-neutral-300 hover:text-white hover:bg-neutral-900 transition-all ${!isHovered ? "justify-center px-0" : ""
-                        }`}
-                    title={!isHovered ? "Switch theme" : undefined}
-                >
-                    <SunIcon className="w-5 h-5 text-neutral-400 flex-shrink-0" />
-                    {isHovered && (
-                        <span className="truncate transition-opacity duration-200">
-                            Switch to {isDarkMode ? "light" : "dark"} mode
-                        </span>
-                    )}
-                </button>
 
-                {/* User Profile Tile */}
-                <NavLink
-                    to="/profile"
-                    className={`flex items-center gap-3 px-2 py-2 rounded-2xl hover:bg-neutral-900 transition-all ${!isHovered ? "justify-center" : ""
-                        }`}
-                    title={!isHovered ? "Profile" : undefined}
-                >
-                    <img
-                        src={currentUser.Photo || profilepic}
-                        alt="Profile"
-                        className="w-7 h-7 rounded-full object-cover border border-neutral-700 flex-shrink-0"
-                    />
-                    {isHovered && (
-                        <div className="truncate text-left">
-                            <p className="text-xs font-bold text-white truncate">
-                                {currentUser.name || "Your Account"}
-                            </p>
-                            <p className="text-[10px] text-neutral-500 truncate">View profile</p>
-                        </div>
-                    )}
-                </NavLink>
-            </div>
         </aside>
     );
 }

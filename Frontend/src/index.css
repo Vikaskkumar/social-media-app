@@ -8,7 +8,7 @@
   --color-brand-dark: #09090b;
 }
 
-/* Custom scrollbar for modern developer feel */
+/* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -32,43 +32,38 @@
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #06b6d4;
+  background: #a1a1aa;
 }
 
 .dark ::-webkit-scrollbar-thumb:hover {
-  background: #00f3ff55;
+  background: #52525b;
 }
 
-/* Subtly animated background cyber glow grid */
-.cyber-glow {
-  background: radial-gradient(circle 800px at 50% -200px, rgba(0, 180, 210, 0.07), transparent 85%);
+/* Reusable Minimal Component Classes */
+.card {
+  @apply rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900;
 }
 
-.dark .cyber-glow,
-.dark.cyber-glow {
-  background: radial-gradient(circle 800px at 50% -200px, rgba(0, 243, 255, 0.12), transparent 85%);
+.btn-primary {
+  @apply px-4 py-2 rounded-lg text-xs font-semibold bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900 hover:opacity-90 transition cursor-pointer;
 }
 
-.glass-card {
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(228, 228, 231, 0.8);
+.btn-icon {
+  @apply transition cursor-pointer text-zinc-400 dark:text-zinc-500 hover:text-zinc-900 dark:hover:text-white;
 }
 
-.dark .glass-card {
-  background: rgba(15, 15, 20, 0.75);
-  border: 1px solid rgba(39, 39, 42, 0.8);
+.avatar-sm {
+  @apply h-9 w-9 rounded-full object-cover border border-zinc-200 dark:border-zinc-800 cursor-pointer;
 }
 
-.text-gradient {
-  background: linear-gradient(135deg, #09090b 0%, #71717a 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+.avatar-xs {
+  @apply h-6 w-6 rounded-full object-cover border border-zinc-200 dark:border-zinc-800;
 }
 
-.dark .text-gradient {
-  background: linear-gradient(135deg, #fff 0%, #a1a1aa 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+.input-box {
+  @apply text-xs px-3 py-2 rounded-lg bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-900 dark:text-white outline-none placeholder-zinc-400 focus:border-zinc-400 dark:focus:border-zinc-600 transition;
+}
+
+.modal-backdrop {
+  @apply fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm;
 }

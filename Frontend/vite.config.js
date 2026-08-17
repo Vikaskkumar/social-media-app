@@ -25,11 +25,10 @@ export default defineConfig({
       '/myfollowingpost': 'http://localhost:5000',
       '/uploadProfilePic': 'http://localhost:5000',
       '/removeProfilePic': 'http://localhost:5000',
-      '/chat': 'http://localhost:5000',
     }
   },
   build: {
-    outDir: '../public',
+    outDir: '../Backend/public',
     emptyOutDir: true,
   },
 })

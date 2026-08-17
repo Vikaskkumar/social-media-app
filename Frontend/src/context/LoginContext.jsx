@@ -6,11 +6,6 @@ import React, {
   useState,
 } from "react";
 
-import {
-  connectSocket,
-  disconnectSocket,
-} from "../socket/socket";
-
 export const LoginContext = createContext(null);
 
 export const LoginProvider = ({ children }) => {
@@ -50,22 +45,6 @@ export const LoginProvider = ({ children }) => {
   const [modalOpen, setModalOpen] = useState(false);
 
   // -----------------------------
-  // Socket connection
-  // -----------------------------
-  useEffect(() => {
-    if (!token) {
-      disconnectSocket();
-      return;
-    }
-
-    connectSocket(token);
-
-    return () => {
-      disconnectSocket();
-    };
-  }, [token]);
-
-  // -----------------------------
   // LOGIN
   // -----------------------------
   const login = (userData, jwtToken) => {
@@ -99,8 +78,6 @@ export const LoginProvider = ({ children }) => {
   // -----------------------------
   const logout = () => {
     console.log("logout() called");
-
-    disconnectSocket();
 
     localStorage.removeItem("jwt");
     localStorage.removeItem("user");
