@@ -1,30 +1,14 @@
 {
-  "version": 2,
-  "outputDirectory": "Backend/public",
-  "builds": [
+  "buildCommand": "npm run build",
+  "outputDirectory": "Frontend/dist",
+  "rewrites": [
     {
-      "src": "Backend/app.js",
-      "use": "@vercel/node"
+      "source": "/(allposts|like|unlike|comment|createPost|myposts|myprofile|deletepost|signup|signin|user|follow|unfollow|myfollowingpost|uploadProfilePic|removeProfilePic|health)(.*)",
+      "destination": "/api/index.js"
     },
     {
-      "src": "Frontend/package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "../Backend/public"
-      }
-    }
-  ],
-  "routes": [
-    {
-      "src": "/(allposts|like|unlike|comment|createPost|myposts|myprofile|deletepost|signup|signin|user|follow|unfollow|myfollowingpost|uploadProfilePic|removeProfilePic|health)(.*)",
-      "dest": "Backend/app.js"
-    },
-    {
-      "handle": "filesystem"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "Backend/public/index.html"
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ]
 }
