@@ -1,5 +1,6 @@
 {
   "version": 2,
+  "outputDirectory": "Backend/public",
   "builds": [
     {
       "src": "Backend/app.js",
@@ -9,7 +10,7 @@
       "src": "Frontend/package.json",
       "use": "@vercel/static-build",
       "config": {
-        "distDir": "Backend/public"
+        "distDir": "../Backend/public"
       }
     }
   ],

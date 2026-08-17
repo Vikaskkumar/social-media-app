@@ -1,5 +1,6 @@
 const express = require("express");
 const path = require("path");
+const fs = require("fs");
 const cors = require("cors");
 
 // Load local .env if available
@@ -22,7 +23,10 @@ const allowedOrigins = Array.from(new Set([
   "http://localhost:5000"
 ]));
 
-const publicDir = path.join(__dirname, "public");
+// Resolve static directory dynamically
+const primaryPublic = path.join(__dirname, "public");
+const fallbackPublic = path.join(__dirname, "../Frontend/dist");
+const publicDir = fs.existsSync(primaryPublic) ? primaryPublic : fallbackPublic;
 
 // Middlewares
 app.use(cors({
