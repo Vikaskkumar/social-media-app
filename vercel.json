@@ -3,6 +3,10 @@
   "outputDirectory": "Frontend/dist",
   "rewrites": [
     {
+      "source": "/api/(.*)",
+      "destination": "/api/index.js"
+    },
+    {
       "source": "/(allposts|like|unlike|comment|createPost|myposts|myprofile|deletepost|signup|signin|user|follow|unfollow|myfollowingpost|uploadProfilePic|removeProfilePic|health)(.*)",
       "destination": "/api/index.js"
     },

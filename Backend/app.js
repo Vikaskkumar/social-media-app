@@ -44,6 +44,14 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// URL Normalization for Vercel Serverless Rewrites
+app.use((req, res, next) => {
+  if (req.url.startsWith("/api")) {
+    req.url = req.url.replace(/^\/api(\/index\.js)?/, "") || "/";
+  }
+  next();
+});
+
 // Ensure DB is connected for Vercel serverless requests
 app.use(async (req, res, next) => {
   try {
@@ -51,7 +59,7 @@ app.use(async (req, res, next) => {
     next();
   } catch (err) {
     console.error("DB connection error:", err.message);
-    res.status(500).json({ error: "Database connection failure: " + err.message });
+    res.status(500).json({ success: false, message: "Database connection failure: " + err.message });
   }
 });
 
